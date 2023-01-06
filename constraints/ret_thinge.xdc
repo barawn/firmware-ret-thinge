@@ -10,6 +10,13 @@ set_property -dict { IOSTANDARD LVDS_25 PACKAGE_PIN T4 DIFF_TERM "TRUE" } [get_p
 set_property -dict { IOSTANDARD LVDS_25 PACKAGE_PIN V6 DIFF_TERM "TRUE" } [get_ports {RXD1_P}]
 set_property -dict { IOSTANDARD LVDS_25 PACKAGE_PIN U7 DIFF_TERM "TRUE" } [get_ports {RXD1_N}]
 
+set_property -dict { IOSTANDARD LVDS_25 PACKAGE_PIN P5 DIFF_TERM "TRUE" } [get_ports {TRIG0_P}]
+set_property -dict { IOSTANDARD LVDS_25 PACKAGE_PIN P6 DIFF_TERM "TRUE" } [get_ports {TRIG0_N}]
+set_property -dict { IOSTANDARD LVDS_25 PACKAGE_PIN R5 DIFF_TERM "TRUE" } [get_ports {TRIG1_P}]
+set_property -dict { IOSTANDARD LVDS_25 PACKAGE_PIN T5 DIFF_TERM "TRUE" } [get_ports {TRIG1_N}]
+
+set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN D14 } [get_ports { FP_TRIG }]
+
 set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN P15 } [get_ports { PPSTXD0 } ]
 set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN R16 } [get_ports { PPSTXD1 } ]
 set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN P14 } [get_ports { DRV_PANELS } ]
@@ -18,5 +25,8 @@ set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN U14 } [get_ports { P1_RX }]
 set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN V14 } [get_ports { P1_TX }]
 set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN L14 } [get_ports { P0_RX }]
 set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN U10 } [get_ports { P0_TX }]
+
+set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN K18 } [get_ports { LED } ]
+set_property -dict { IOSTANDARD LVCMOS33 PACKAGE_PIN T14 } [get_ports { CLK25M }]
 
 create_clock -period 40.000 -name clk25 [get_ports -filter { NAME =~ "CLK25M" }]

@@ -55,6 +55,13 @@ module ret_thinge(
         input P0_TX,            // pin 99 JM2 = pin 100 JM2 on FPGA board = B14_L0 = L14
         output P0_RX,           // pin 97 JM2 = pin 98 JM2 on FPGA board = B14_L25 = U10
         
+        input TRIG0_P,          // pin 71 JM1 = pin 72 JM1 on FPGA board = B34_L19_N = P5
+        input TRIG0_N,          // pin 73 JM1 = pin 74 JM1 on FPGA board = B34_L19_P = P6
+        input TRIG1_P,          // pin 67 JM1 = pin 68 JM1 on FPGA board = B34_L21_P = R5
+        input TRIG1_N,          // pin 69 JM1 = pin 70 JM1 on FPGA board = B34_L21_N = T5
+        
+        output FP_TRIG,         // pin 34 JM2 = pin 33 JM2 on FPGA board = B15_L12_N = D14
+        
         input CLK25M,           // B14_L13_P = T14
         output LED              // K18
     );
@@ -73,11 +80,19 @@ module ret_thinge(
     assign PPSTXD0 = P0_TX;
     assign PPSTXD1 = P1_TX;
     
+    wire trig0_in;
+    wire trig1_in;
     // These are connected inverted at the FPGA (P<->N are swapped)
     // So we hook them up backwards and use the inverted output.
     IBUFDS_DIFF_OUT u_rxd0(.I(RXD0_N),.IB(RXD0_P),.O(),.OB(P0_RX));
     IBUFDS_DIFF_OUT u_rxd1(.I(RXD1_N),.IB(RXD1_P),.O(),.OB(P1_RX));
-
+    IBUFDS_DIFF_OUT u_trig0(.I(TRIG0_N),.IB(TRIG0_P),.O(),.OB(trig0_in));
+    
+    // these are not inverted
+    IBUFDS_DIFF_OUT u_trig1(.I(TRIG1_P),.IB(TRIG1_N),.O(trig1_in),.OB());
+    
+    trig_debug_ila u_ila(.clk(clk25),.probe0(trig0_in),.probe1(trig1_in));
+    
     // blink LED
     wire toggle_led;
     reg led_reg = 0;
@@ -90,5 +105,5 @@ module ret_thinge(
     always @(posedge clk25) if (toggle_led) led_reg <= ~led_reg;
 
     assign LED = led_reg;
-        
+    assign FP_TRIG = trig0_in && trig1_in;
 endmodule
