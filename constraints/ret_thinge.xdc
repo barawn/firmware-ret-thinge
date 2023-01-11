@@ -19,6 +19,8 @@ set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN D14} [get_ports FP_TRIG]
 
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN P15} [get_ports PPSTXD0]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN R16} [get_ports PPSTXD1]
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN R17} [get_ports CLK0]
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN P16} [get_ports CLK1]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN P14} [get_ports DRV_PANELS]
 
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN U14} [get_ports P1_RX]
@@ -26,6 +28,11 @@ set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN V14} [get_ports P1_TX]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN L14} [get_ports P0_RX]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN U10} [get_ports P0_TX]
 
+set_property -dict {IOSTANDARD LVDS_25 PACKAGE_PIN U2 } [get_ports CODA_TRIG_P]
+set_property -dict {IOSTANDARD LVDS_25 PACKAGE_PIN U1 } [get_ports CODA_TRIG_N]
+
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN D11} [get_ports RLED]
+set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN C12} [get_ports GLED]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN K18} [get_ports LED]
 set_property -dict {IOSTANDARD LVCMOS33 PACKAGE_PIN T14} [get_ports CLK25M]
 

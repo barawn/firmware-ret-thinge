@@ -62,9 +62,19 @@ module ret_thinge(
         
         output FP_TRIG,         // pin 34 JM2 = pin 33 JM2 on FPGA board = B15_L12_N = D14
         
+        output CLK0,            // These get "stolen" to use as a CODALEMA LVDS output = pin 78 JM2 = pin 77 JM2 on FPGA board = B14_L14_N = R17
+        output CLK1,            // in THINGEv2 they are the clock outputs              = pin 74 JM2 = pin 73 JM2 on FPGA board = B14_L11_N = P16
+
+        output CODA_TRIG_P,     // THINGEv2 codalema output+ = pin 62 JM1 = pin 61 JM1 on FPGA = B34_L15_P = U2
+        output CODA_TRIG_N,     // THINGEv2 codalema output-                                   = B34_L15_N = U1
+        
         input CLK25M,           // B14_L13_P = T14
+        output RLED,            // pin 24 JM2 = pin 23 JM2 = B15_L6_P = D11
+        output GLED,            // pin 26 JM2 = pin 25 JM2 = B15_L6_N = C12
         output LED              // K18
     );
+
+    parameter THINGEV1_HACK = "TRUE";
 
     wire clk25;
     BUFG u_clk25(.I(CLK25M),.O(clk25));
@@ -104,6 +114,24 @@ module ret_thinge(
                                            .tcount_reached_o(toggle_led));
     always @(posedge clk25) if (toggle_led) led_reg <= ~led_reg;
 
-    assign LED = led_reg;
-    assign FP_TRIG = trig0_in && trig1_in;
+    wire local_trigger = trig0_in && trig1_in;
+
+    generate
+        if (THINGEV1_HACK == "TRUE") begin : HACKS
+            assign CLK0 = local_trigger;
+            assign CLK1 = local_trigger;
+        end else begin
+            // actually hook this up later
+            assign CLK0 = 1'b0;
+            assign CLK1 = 1'b0;
+        end
+    endgenerate
+     
+    OBUFDS u_codatrig(.I(local_trigger),.O(CODA_TRIG_P),.OB(CODA_TRIG_N));
+    
+
+   assign LED = led_reg;
+   assign RLED = 1'b0;
+   assign GLED = 1'b1;
+   assign FP_TRIG = trig0_in && trig1_in;
 endmodule
